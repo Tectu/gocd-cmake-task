@@ -34,13 +34,13 @@ version = '0.2-SNAPSHOT'
 // these values that go into plugin.xml
 // TODO: change these
 project.ext.pluginDesc = [
-  id         : 'cd.go.contrib.task.skeleton',
+  id         : 'engineer.insane.gocd.plugin.task.cmake',
   version    : project.version,
-  goCdVersion: '16.12.0',
-  name       : 'Example Task Plugin',
-  description: 'Some longer description of your plugin goes here',
-  vendorName : 'Acme Corp',
-  vendorUrl  : 'https://github.com/user/repository'
+  goCdVersion: '20.10.0',
+  name       : 'CMake Task',
+  description: 'A plugin providing a cmake task.',
+  vendorName : 'Joel Bodenmann',
+  vendorUrl  : 'https://silizium.io'
 ]
 
 // Force 1.7 compatibility to ensure that it works with older JVMs
