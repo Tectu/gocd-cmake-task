@@ -56,6 +56,12 @@ public class GetConfigRequest {
         compilerCpp.put("required", false);
         config.put(TaskPlugin.COMPILER_CPP, compilerCpp);
 
+        HashMap<String, Object> buildParallelJobs = new HashMap<>();
+        compilerCpp.put("display-order", "5");
+        compilerCpp.put("display-name", "Build Parallel Jobs");
+        compilerCpp.put("required", false);
+        config.put(TaskPlugin.BUILD_PARALLEL_JOBS, buildParallelJobs);
+
         return DefaultGoPluginApiResponse.success(TaskPlugin.GSON.toJson(config));
     }
 }
