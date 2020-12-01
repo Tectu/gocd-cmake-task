@@ -53,7 +53,6 @@ public class ExecuteRequest {
         logger.printLine("Task completed successfully!");
 
         // We succeeded
-        result = new Result(true, "success");
-        return new DefaultGoPluginApiResponse(result.responseCode(), TaskPlugin.GSON.toJson(result.toMap()));
+        return new DefaultGoPluginApiResponse(200, "{ \"success\": true, \"message\": \"success\" }");
     }
 }
