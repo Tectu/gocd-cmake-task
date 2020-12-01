@@ -27,13 +27,16 @@ import java.util.Map;
 public class ValidateRequest {
     public GoPluginApiResponse execute(GoPluginApiRequest request) {
         HashMap<String, Object> validationResult = new HashMap<>();
-        int responseCode = DefaultGoPluginApiResponse.SUCCESS_RESPONSE_CODE;
-        Map configMap = (Map) new GsonBuilder().create().fromJson(request.requestBody(), Object.class);
+
+        // Create error map
         HashMap errorMap = new HashMap();
-        if (!configMap.containsKey(TaskPlugin.URL_PROPERTY) || ((Map) configMap.get(TaskPlugin.URL_PROPERTY)).get("value") == null || ((String) ((Map) configMap.get(TaskPlugin.URL_PROPERTY)).get("value")).trim().isEmpty()) {
-            errorMap.put(TaskPlugin.URL_PROPERTY, "URL cannot be empty");
-        }
+
+        // Check config
+        Map configMap = (Map) new GsonBuilder().create().fromJson(request.requestBody(), Object.class);
+
+        // Save errors
         validationResult.put("errors", errorMap);
-        return new DefaultGoPluginApiResponse(responseCode, TaskPlugin.GSON.toJson(validationResult));
+
+        return new DefaultGoPluginApiResponse(DefaultGoPluginApiResponse.SUCCESS_RESPONSE_CODE, TaskPlugin.GSON.toJson(validationResult));
     }
 }

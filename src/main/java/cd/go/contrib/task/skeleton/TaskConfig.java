@@ -20,35 +20,21 @@ import java.util.Map;
 
 // TODO: edit this to map to the fields in your task configuration
 public class TaskConfig {
-    private final String requestType;
-    private final String secureConnection;
-    private final String additionalOptions;
-    private final String url;
+    public final String buildDir;
+    public final String sourceDir;
+    public final String generator;
+    public final String compilerC;
+    public final String compilerCpp;
 
     public TaskConfig(Map config) {
-        requestType = getValue(config, TaskPlugin.REQUEST_PROPERTY);
-        secureConnection = getValue(config, TaskPlugin.SECURE_CONNECTION_PROPERTY);
-        additionalOptions = getValue(config, TaskPlugin.ADDITIONAL_OPTIONS);
-        url = getValue(config, TaskPlugin.URL_PROPERTY);
+        buildDir    = getValue(config, TaskPlugin.BUILD_DIRECTORY);
+        sourceDir    = getValue(config, TaskPlugin.SOURCE_DIRECTORY);
+        generator   = getValue(config, TaskPlugin.GENERATOR);
+        compilerC   = getValue(config, TaskPlugin.COMPILER_C);
+        compilerCpp = getValue(config, TaskPlugin.COMPILER_CPP);
     }
 
     private String getValue(Map config, String property) {
         return (String) ((Map) config.get(property)).get("value");
-    }
-
-    public String getRequestType() {
-        return requestType;
-    }
-
-    public String getSecureConnection() {
-        return secureConnection;
-    }
-
-    public String getAdditionalOptions() {
-        return additionalOptions;
-    }
-
-    public String getUrl() {
-        return url;
     }
 }

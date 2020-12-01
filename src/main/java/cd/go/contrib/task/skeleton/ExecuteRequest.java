@@ -1,19 +1,3 @@
-/*
- * Copyright 2017 ThoughtWorks, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package cd.go.contrib.task.skeleton;
 
 import com.google.gson.GsonBuilder;
@@ -24,15 +8,52 @@ import com.thoughtworks.go.plugin.api.task.JobConsoleLogger;
 
 import java.util.Map;
 
-// TODO: add code here to execute your task
 public class ExecuteRequest {
     public GoPluginApiResponse execute(GoPluginApiRequest request) {
-        CurlTaskExecutor executor = new CurlTaskExecutor();
         Map executionRequest = (Map) new GsonBuilder().create().fromJson(request.requestBody(), Object.class);
-        Map config = (Map) executionRequest.get("config");
-        Map context = (Map) executionRequest.get("context");
+        TaskConfig config = new TaskConfig((Map) executionRequest.get("config"));
+        Context context = new Context((Map) executionRequest.get("context"));
 
-        Result result = executor.execute(new TaskConfig(config), new Context(context), JobConsoleLogger.getConsoleLogger());
+        JobConsoleLogger logger = JobConsoleLogger.getConsoleLogger();
+        Result result;
+
+        // Create build directory
+        {
+            logger.printLine("Creating build directory...");
+            CommandExecutor executor = new CreateDirExecutor(config);
+            result = executor.execute(context, logger);
+            if (!result.success()) {
+                result = new Result(false, "Could not create directory: " + result.message());
+                return new DefaultGoPluginApiResponse(result.responseCode(), TaskPlugin.GSON.toJson(result.toMap()));
+            }
+        }
+
+        // Run cmake
+        {
+            logger.printLine("Starting cmake...");
+            CmakeTaskExecutor executor = new CmakeTaskExecutor(config);
+            result = executor.execute(context, logger);
+            if (!result.success()) {
+                result = new Result(false, "Running cake failed: " + result.message());
+                return new DefaultGoPluginApiResponse(result.responseCode(), TaskPlugin.GSON.toJson(result.toMap()));
+            }
+        }
+
+        // Run build
+        {
+            logger.printLine("Starting to run build...");
+            BuildTaskExecutor executor = new BuildTaskExecutor(config);
+            result = executor.execute(context, logger);
+            if (!result.success()) {
+                result = new Result(false, "Running build failed: " + result.message());
+                return new DefaultGoPluginApiResponse(result.responseCode(), TaskPlugin.GSON.toJson(result.toMap()));
+            }
+        }
+
+        logger.printLine("Task completed successfully!");
+
+        // We succeeded
+        result = new Result(true, "success");
         return new DefaultGoPluginApiResponse(result.responseCode(), TaskPlugin.GSON.toJson(result.toMap()));
     }
 }

@@ -26,7 +26,7 @@ public class GetViewRequest {
     public GoPluginApiResponse execute() {
         int responseCode = DefaultGoApiResponse.SUCCESS_RESPONSE_CODE;
         HashMap<String, String> view = new HashMap<>();
-        view.put("displayValue", "Curl");
+        view.put("displayValue", "CMake");
         try {
             view.put("template", Util.readResource("/task.template.html"));
         } catch (Exception e) {

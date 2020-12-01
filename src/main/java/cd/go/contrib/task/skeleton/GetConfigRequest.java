@@ -21,37 +21,40 @@ import com.thoughtworks.go.plugin.api.response.GoPluginApiResponse;
 
 import java.util.HashMap;
 
-// TODO: change this to allow configuration options in your configuration
 public class GetConfigRequest {
 
     public GoPluginApiResponse execute() {
         HashMap<String, Object> config = new HashMap<>();
 
-        HashMap<String, Object> url = new HashMap<>();
-        url.put("display-order", "0");
-        url.put("display-name", "Url");
-        url.put("required", true);
-        config.put(TaskPlugin.URL_PROPERTY, url);
+        HashMap<String, Object> buildDir = new HashMap<>();
+        buildDir.put("display-order", "0");
+        buildDir.put("display-name", "Build Directory");
+        buildDir.put("required", true);
+        config.put(TaskPlugin.BUILD_DIRECTORY, buildDir);
 
-        HashMap<String, Object> secure = new HashMap<>();
-        secure.put("default-value", TaskPlugin.SECURE_CONNECTION);
-        secure.put("display-order", "1");
-        secure.put("display-name", "Secure Connection");
-        secure.put("required", false);
-        config.put(TaskPlugin.SECURE_CONNECTION_PROPERTY, secure);
+        HashMap<String, Object> sourceDir = new HashMap<>();
+        buildDir.put("display-order", "1");
+        buildDir.put("display-name", "Source Directory");
+        buildDir.put("required", true);
+        config.put(TaskPlugin.SOURCE_DIRECTORY, sourceDir);
 
-        HashMap<String, Object> requestType = new HashMap<>();
-        requestType.put("default-value", TaskPlugin.REQUEST_TYPE);
-        requestType.put("display-order", "2");
-        requestType.put("display-name", "Request Type");
-        requestType.put("required", false);
-        config.put(TaskPlugin.REQUEST_PROPERTY, requestType);
+        HashMap<String, Object> generator = new HashMap<>();
+        generator.put("display-order", "2");
+        generator.put("display-name", "Generator");
+        generator.put("required", false);
+        config.put(TaskPlugin.GENERATOR, generator);
 
-        HashMap<String, Object> additionalOptions = new HashMap<>();
-        additionalOptions.put("display-order", "3");
-        additionalOptions.put("display-name", "Additional Options");
-        additionalOptions.put("required", false);
-        config.put(TaskPlugin.ADDITIONAL_OPTIONS, additionalOptions);
+        HashMap<String, Object> compilerC = new HashMap<>();
+        compilerC.put("display-order", "3");
+        compilerC.put("display-name", "C Compiler");
+        compilerC.put("required", false);
+        config.put(TaskPlugin.COMPILER_C, compilerC);
+
+        HashMap<String, Object> compilerCpp = new HashMap<>();
+        compilerCpp.put("display-order", "4");
+        compilerCpp.put("display-name", "C++ Compiler");
+        compilerCpp.put("required", false);
+        config.put(TaskPlugin.COMPILER_CPP, compilerCpp);
 
         return DefaultGoPluginApiResponse.success(TaskPlugin.GSON.toJson(config));
     }

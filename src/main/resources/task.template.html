@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2017 ThoughtWorks, Inc.
+  ~ Copyright 2020 Joel Bodenmann https://silizium.io
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -15,33 +15,26 @@
   -->
 
 <div class="form_item_block">
-  <label>URL:<span class="asterisk">*</span></label>
-  <input type="url" ng-model="Url" ng-required="true"/>
-  <span class="form_error" ng-show="GOINPUTNAME[Url].$error.url">Incorrect url format.</span>
-  <span class="form_error" ng-show="GOINPUTNAME[Url].$error.server">{{ GOINPUTNAME[Url].$error.server }}</span>
+  <label>Build Directory:<span class="asterisk">*</span></label>
+  <input type="text" ng-model="build_directory" ng-required="true"/>
 </div>
 
 <div class="form_item_block">
-  <label>Secure Connection:</label>
-  <div class="checkbox_row">
-    <input id="secureConnectionYes" type="radio" ng-model="SecureConnection" value="yes">
-    <label for="secureConnectionYes">Yes</label>
-    <input id="secureConnectionNo" type="radio" ng-model="SecureConnection" value="no">
-    <label for="secureConnectionNo">No</label>
-  </div>
+  <label>Source Directory:<span class="asterisk">*</span></label>
+  <input type="text" ng-model="source_directory" ng-required="true"/>
 </div>
 
 <div class="form_item_block">
-  <label>Request Type:</label>
-  <select ng-model="RequestType">
-    <option value="-XGET">GET</option>
-    <option value="-XPOST">POST</option>
-  </select>
+  <label>Generator:</label>
+  <input type="text" ng-model="generator" ng-required="false"/>
 </div>
 
 <div class="form_item_block">
-  <label>Additional Options</label>
-  <input type="text" ng-model="AdditionalOptions">
-  </input>
-  <span class="form_error" ng-show="GOINPUTNAME[AdditionalOptions].$error.server">{{ GOINPUTNAME[AdditionalOptions].$error.server }}</span>
+  <label>C Compiler:</label>
+  <input type="text" ng-model="compiler_c" ng-required="false"/>
+</div>
+
+<div class="form_item_block">
+  <label>C++ Compiler:</label>
+  <input type="text" ng-model="compiler_cpp" ng-required="false"/>
 </div>
