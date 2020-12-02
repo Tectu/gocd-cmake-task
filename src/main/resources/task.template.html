@@ -1,45 +1,330 @@
-<!--
-  ~ Copyright 2020 Joel Bodenmann https://silizium.io
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~     http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
+<div data-plugin-style-id="ea-plugin" style="margin: 20px">
+  <!-- CSS borrowed from https://github.com/gocd/gocd-ecs-elastic-agent/blob/master/src/main/resources/cluster-profile.template.html -->
+  <style>
+    [data-test-id="modal-body"] {
+      background: #f4f8f9;
+    }
 
-<div class="form_item_block">
-  <label>Build Directory:<span class="asterisk">*</span></label>
-  <input type="text" ng-model="build_directory" ng-required="true"/>
-</div>
+    [data-plugin-style-id="ea-plugin"] fieldset {
+      padding: 20px;
+      background-color: transparent;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+    }
 
-<div class="form_item_block">
-  <label>Source Directory:<span class="asterisk">*</span></label>
-  <input type="text" ng-model="source_directory" ng-required="true"/>
-</div>
+    [data-plugin-style-id="ea-plugin"] .form-help-content {
+      color:       #666;
+      font-style:  italic;
+      clear:       both;
+      font-size:   12px;
+      line-height: 16px;
+    }
 
-<div class="form_item_block">
-  <label>Generator:</label>
-  <input type="text" ng-model="generator" ng-required="false"/>
-</div>
+    [data-plugin-style-id="ea-plugin"] .form-help-content ul {
+      list-style-type: circle;
+      margin-bottom:   10px;
+      margin-left:     20px;
+    }
 
-<div class="form_item_block">
-  <label>C Compiler:</label>
-  <input type="text" ng-model="compiler_c" ng-required="false"/>
-</div>
+    [data-plugin-style-id="ea-plugin"] .form-help-content li {
+      list-style-type: circle;
+      padding-top:     5px;
+    }
 
-<div class="form_item_block">
-  <label>C++ Compiler:</label>
-  <input type="text" ng-model="compiler_cpp" ng-required="false"/>
-</div>
+    [data-plugin-style-id="ea-plugin"] .code {
+      padding:          10px;
+      overflow:         auto;
+      font-size:        85%;
+      line-height:      1.45;
+      background-color: #e8e8e8;
+      border-radius:    3px;
+      margin-bottom:    1rem;
+    }
 
-<div class="form_item_block">
-  <label>Build Parallel Jobs:</label>
-  <input type="number" min="1" max="1024" step="1" value="4" ng-model="build_parallel_jobs" ng-required="false"/>
+    [data-plugin-style-id="ea-plugin"] code {
+      font-size:     95%;
+      white-space:   nowrap;
+      border-radius: 3px;
+    }
+
+    [data-plugin-style-id="ea-plugin"] strong {
+      font-weight: bold;
+    }
+
+    [data-plugin-style-id="ea-plugin"] textarea {
+      resize: vertical;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .form_item_block {
+      margin-bottom: 12px;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .form_error {
+      margin: 0;
+    }
+
+    [data-plugin-style-id="ea-plugin"] input,
+    [data-plugin-style-id="ea-plugin"] select,
+    [data-plugin-style-id="ea-plugin"] textarea {
+      margin: 0;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .ea-h-tab {
+      display:         flex;
+      flex-direction:  column;
+      justify-content: flex-start;
+      margin-bottom:   15px;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .ea-h-tab_tab-head {
+      display:        flex;
+      flex-direction: row;
+      margin:         0;
+      list-style:     none;
+      width:          100%;
+      padding:        0 20px;
+      float:          left;
+      border:         1px solid #e9edef;
+      background:     #e7eef0;
+      border-radius:  3px 3px 0 0;
+      box-sizing:     border-box;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .ea-h-tab_tab-head li {
+      font-size:     16px;
+      cursor:        pointer;
+      padding:       0px 20px;
+      height:        32px;
+      line-height:   31px;
+      color:         #333;
+      border-bottom: 0px;
+      overflow:      hidden;
+      position:      relative;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .ea-h-tab_tab-head li.active {
+      border-bottom: 3px solid #94399e;
+      color:         #94399e;
+      display:       block;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .ea-h-tab_container {
+      padding:    20px;
+      background: #fff;
+      border:     1px solid #e9edef;
+      border-top: none;
+      clear:      both;
+      box-sizing: border-box;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .ea-panel {
+      margin-bottom: 15px;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .ea-panel_header {
+      padding:       0px 30px;
+      background:    #e7eef0;
+      border-radius: 3px 3px 0 0;
+      font-weight:   600;
+      font-size:     14px;
+      line-height:   30px;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .ea-panel_body {
+      padding:    20px 30px;
+      background: #fff;
+      border:     1px solid #e9edef;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .ea-c-collapse {
+      background:    #fff;
+      position:      relative;
+      border:        1px solid #ececec;
+      border-radius: 3px;
+      margin-bottom: 10px;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .ea-c-collapse_header {
+      cursor:        pointer;
+      padding:       5px 50px 5px 30px;
+      border-bottom: 1px solid #ececec;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .ea-c-collapse_header:after {
+      font-family: 'FontAwesome';
+      font-style:  normal;
+      font-weight: normal;
+      position:    absolute;
+      right:       15px;
+      font-size:   30px;
+      top:         -6px;
+      color:       #ddd;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .ea-c-collapse_header.collapsed {
+      border-bottom: none;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .ea-c-collapse_header.collapsed:after {
+      content: "\f105";
+    }
+
+    [data-plugin-style-id="ea-plugin"] .ea-c-collapse_header.expanded:after {
+      content: "\f107";
+    }
+
+    [data-plugin-style-id="ea-plugin"] .ea-c-collapse_body {
+      padding: 20px 30px;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .col-2 {
+      display: flex;
+      margin:  0 -15px;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .col-2 .col {
+      width:   50%;
+      padding: 0 15px;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .col-3 {
+      display: flex;
+      margin:  0 -15px;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .col-3 .col {
+      width:   33%;
+      padding: 0 15px;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .help {
+      font-size: 13px;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .help_header {
+      font-size: 13px;
+      margin:    10px 0;
+      cursor:    pointer;
+      color:     #666;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .help_header:before {
+      content:      "\f105";
+      font-family:  'FontAwesome';
+      font-style:   normal;
+      font-weight:  normal;
+      font-size:    15px;
+      color:        #333;
+      margin-right: 5px;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .help_header.expanded:before {
+      content: "\f107";
+    }
+
+    [data-plugin-style-id="ea-plugin"] .help_body {
+      padding:    20px;
+      background: #f5f5f5;
+      font-size:  12px;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .help_body *:last-child {
+      margin-bottom: 0;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .help_body dl {
+      overflow: hidden;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .help_body dt {
+      float:         left;
+      clear:         left;
+      margin-bottom: 10px;
+      font-weight:   600;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .help_body dd {
+      margin-bottom: 10px;
+    }
+
+    [data-plugin-style-id="ea-plugin"] .help_body dt:after {
+      content:      ":";
+      font-weight:  600;
+      margin-left:  3px;
+      margin-right: 10px;
+    }
+
+    [data-plugin-style-id="ea-plugin"] label.required::after {
+      content: "*";
+      color:   #fa2d2d;
+    }
+
+    [data-plugin-style-id="ea-plugin"] input[type] {
+      margin-bottom: 2px;
+    }
+  </style>
+
+  <!-- CMake panel -->
+  <div class="ea-panel">
+    <div class="ea-panel_header">CMake settings</div>
+    <div class="ea-panel_body">
+
+      <div class="form_item_block">
+        <label>Build Directory:<span class="asterisk">*</span></label>
+        <input type="text" placeholder="build" ng-model="build_directory" ng-required="true"/>
+        <div class="form-help-content">
+          <p>The relative path to the build directory. This directory will be created if not already existing.</p>
+        </div>
+      </div>
+
+      <div class="form_item_block">
+        <label>Source Directory:<span class="asterisk">*</span></label>
+        <input type="text" placeholder="." ng-model="source_directory" ng-required="true"/>
+        <div class="form-help-content">
+          <p>The path to the source directory. Usually the current directory (.)</p>
+        </div>
+      </div>
+
+      <div class="form_item_block">
+        <label>Generator:</label>
+        <input type="text" placeholder="Unix Makefiles" ng-model="generator" ng-required="false"/>
+        <div class="form-help-content">
+          <p>The cmake generator to use. Eg. "<em>Unix Makefiles</em>" (without quotes).</p>
+        </div>
+      </div>
+
+      <div class="form_item_block">
+        <label>C Compiler:</label>
+        <input type="text" placeholder="gcc" ng-model="compiler_c" ng-required="false"/>
+        <div class="form-help-content">
+          <p>The C compiler to use (binary).</p>
+        </div>
+      </div>
+
+      <div class="form_item_block">
+        <label>C++ Compiler:</label>
+        <input type="text" placeholder="g++" ng-model="compiler_cpp" ng-required="false"/>
+        <div class="form-help-content">
+          <p>The C++ compiler to use (binary).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Build panel -->
+  <div class="ea-panel">
+    <div class="ea-panel_header">Build settings</div>
+    <div class="ea-panel_body">
+
+      <div class="form_item_block">
+        <label>Build Parallel Jobs:</label>
+        <input type="number" min="1" max="1024" step="1" placeholder="4" ng-model="build_parallel_jobs" ng-required="false"/>
+        <div class="form-help-content">
+          <p>The number of parallel build jobs. This is equivalent to make's -j option parameter.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
