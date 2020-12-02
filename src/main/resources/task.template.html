@@ -317,6 +317,15 @@
     <div class="ea-panel_body">
 
       <div class="form_item_block">
+        <input type="checkbox"
+               ng-model="perform_build"
+               ng-true-value="true"
+               ng-false-value="false"
+        />
+        <label>Enable</label>
+      </div>
+
+      <div class="form_item_block">
         <label>Build Parallel Jobs:</label>
         <input type="number" min="1" max="1024" step="1" placeholder="4" ng-model="build_parallel_jobs" ng-required="false"/>
         <div class="form-help-content">

@@ -15,10 +15,8 @@ public class BuildTaskExecutor extends CommandExecutor
             command.add("--build");
             command.add(taskConfig.buildDir);
 
-            if (taskConfig.buildParallelJobs >= 1) {
-                command.add("--parallel");
-                command.add(String.valueOf(taskConfig.buildParallelJobs));
-            }
+            command.add("--parallel");
+            command.add(taskConfig.buildParallelJobs);
         }
 
         setCommands(command);

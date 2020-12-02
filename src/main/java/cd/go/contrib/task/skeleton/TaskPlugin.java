@@ -37,6 +37,7 @@ public class TaskPlugin implements GoPlugin {
     public static final String GENERATOR            = "generator";
     public static final String COMPILER_C           = "compiler_c";
     public static final String COMPILER_CPP         = "compiler_cpp";
+    public static final String PERFORM_BUILD        = "perform_build";
     public static final String BUILD_PARALLEL_JOBS  = "build_parallel_jobs";
     public static final Gson GSON = new GsonBuilder().serializeNulls().create();
 

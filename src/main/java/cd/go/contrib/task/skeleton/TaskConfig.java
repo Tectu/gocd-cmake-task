@@ -24,7 +24,8 @@ public class TaskConfig {
     public final String generator;
     public final String compilerC;
     public final String compilerCpp;
-    public final int    buildParallelJobs;
+    public final String performBuild;
+    public final String buildParallelJobs;
 
     public TaskConfig(Map config) {
         buildDir            = getValue(config, TaskPlugin.BUILD_DIRECTORY);
@@ -32,7 +33,8 @@ public class TaskConfig {
         generator           = getValue(config, TaskPlugin.GENERATOR);
         compilerC           = getValue(config, TaskPlugin.COMPILER_C);
         compilerCpp         = getValue(config, TaskPlugin.COMPILER_CPP);
-        buildParallelJobs   = Integer.parseInt(getValue(config, TaskPlugin.BUILD_PARALLEL_JOBS));
+        performBuild        = getValue(config, TaskPlugin.PERFORM_BUILD);
+        buildParallelJobs   = getValue(config, TaskPlugin.BUILD_PARALLEL_JOBS);
     }
 
     private String getValue(Map config, String property) {

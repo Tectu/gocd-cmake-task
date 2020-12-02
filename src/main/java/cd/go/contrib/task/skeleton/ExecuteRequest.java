@@ -39,8 +39,9 @@ public class ExecuteRequest {
             }
         }
 
-        // Run build
-        {
+        // Run build (if supposed to)
+        boolean performBuild = Boolean.parseBoolean(config.performBuild);
+        if (performBuild) {
             logger.printLine("Starting to run build...");
             BuildTaskExecutor executor = new BuildTaskExecutor(config);
             result = executor.execute(context, logger);
