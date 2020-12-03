@@ -22,6 +22,9 @@ pipelines:
         jobs:
           Build:
             timeout: 0
+            resources:
+             - FreeBSD
+             - Java
             artifacts:
              - build:
                  source: build/libs
