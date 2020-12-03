@@ -1,0 +1,38 @@
+format_version: 10
+pipelines:
+  GoCD-CMake-Task:
+    group: GoCD-CMake-Task2
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      git-769c3f5:
+        git: https://github.com/tectu/gocd-cmake-task
+        shallow_clone: false
+        auto_update: true
+        branch: master
+    stages:
+    - Build:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          Build:
+            timeout: 0
+            tasks:
+            - exec:
+                arguments:
+                - +x
+                - ./gradlew
+                command: chmod
+                run_if: passed
+            - exec:
+                arguments:
+                - clean
+                - test
+                - assemble
+                command: ./gradlew
+                run_if: passed
