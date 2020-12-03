@@ -22,6 +22,10 @@ pipelines:
         jobs:
           Build:
             timeout: 0
+            artifacts:
+             - build:
+                 source: build/libs
+                 destination: 
             tasks:
             - exec:
                 arguments:
