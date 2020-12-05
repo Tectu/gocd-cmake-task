@@ -1,7 +1,7 @@
 format_version: 10
 pipelines:
   GoCD-CMake-Task:
-    group: GoCD-CMake-Task2
+    group: GoCD-CMake-Task
     label_template: ${COUNT}
     lock_behavior: none
     display_order: -1
