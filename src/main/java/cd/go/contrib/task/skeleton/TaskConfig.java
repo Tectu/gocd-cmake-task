@@ -19,6 +19,7 @@ package cd.go.contrib.task.skeleton;
 import java.util.Map;
 
 public class TaskConfig {
+    public final String buildType;
     public final String buildDir;
     public final String sourceDir;
     public final String generator;
@@ -28,6 +29,7 @@ public class TaskConfig {
     public final String buildParallelJobs;
 
     public TaskConfig(Map config) {
+        buildType           = getValue(config, TaskPlugin.BUILD_TYPE);
         buildDir            = getValue(config, TaskPlugin.BUILD_DIRECTORY);
         sourceDir           = getValue(config, TaskPlugin.SOURCE_DIRECTORY);
         generator           = getValue(config, TaskPlugin.GENERATOR);

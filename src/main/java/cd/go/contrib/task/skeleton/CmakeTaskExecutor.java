@@ -27,6 +27,10 @@ public class CmakeTaskExecutor extends CommandExecutor
                 command.add(taskTaskConfig.generator);
             }
 
+            // Build type
+            if (!taskTaskConfig.buildType.isEmpty())
+                command.add("-DCMAKE_BUILD_TYPE=" + taskTaskConfig.buildType);
+
             // C Compiler
             if (!taskTaskConfig.compilerC.isEmpty())
                 command.add("-DCMAKE_C_COMPILER=" + taskTaskConfig.compilerC);

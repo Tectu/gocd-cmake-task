@@ -270,6 +270,14 @@
     <div class="ea-panel_body">
 
       <div class="form_item_block">
+        <label>Build Type:</label>
+        <input type="text" placeholder="Release" ng-model="build_type" ng-required="false"/>
+        <div class="form-help-content">
+          <p>The type of build to perform. Usually <em>"Release"</em> or <em>"Debug"</em> (without quotes).</p>
+        </div>
+      </div>
+
+      <div class="form_item_block">
         <label>Build Directory:<span class="asterisk">*</span></label>
         <input type="text" placeholder="build" ng-model="build_directory" ng-required="true"/>
         <div class="form-help-content">

@@ -32,6 +32,7 @@ import java.util.Arrays;
 @Extension
 public class TaskPlugin implements GoPlugin {
 
+    public static final String BUILD_TYPE           = "build_type";
     public static final String BUILD_DIRECTORY      = "build_directory";
     public static final String SOURCE_DIRECTORY     = "source_directory";
     public static final String GENERATOR            = "generator";
