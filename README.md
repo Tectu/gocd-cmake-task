@@ -20,6 +20,7 @@ CMake settings:
 
 | Settings | Key | Sample Value | Description |
 | :--- | :--- | :--- | :--- |
+| Build type | `build_type` | `Release` | The build type to perform. Usually `Release` or `Debug`. |
 | Build directory | `build_directory` | `build` | The build directory relative to the pipeline directory |
 | Source directory | `source_directory` | `.` | The source directory relative to the pipeline directory |
 | Generator | `generator` | `Unix Makefiles` | The buildsystem generator to use |
