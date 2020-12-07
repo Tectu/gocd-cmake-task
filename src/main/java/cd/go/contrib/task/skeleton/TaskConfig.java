@@ -27,16 +27,22 @@ public class TaskConfig {
     public final String compilerCpp;
     public final String performBuild;
     public final String buildParallelJobs;
+    public final String cpackEnable;
+    public final String cpackGenerator;
+    public final String cpackPackageFileName;
 
     public TaskConfig(Map config) {
-        buildType           = getValue(config, TaskPlugin.BUILD_TYPE);
-        buildDir            = getValue(config, TaskPlugin.BUILD_DIRECTORY);
-        sourceDir           = getValue(config, TaskPlugin.SOURCE_DIRECTORY);
-        generator           = getValue(config, TaskPlugin.GENERATOR);
-        compilerC           = getValue(config, TaskPlugin.COMPILER_C);
-        compilerCpp         = getValue(config, TaskPlugin.COMPILER_CPP);
-        performBuild        = getValue(config, TaskPlugin.PERFORM_BUILD);
-        buildParallelJobs   = getValue(config, TaskPlugin.BUILD_PARALLEL_JOBS);
+        buildType               = getValue(config, TaskPlugin.BUILD_TYPE);
+        buildDir                = getValue(config, TaskPlugin.BUILD_DIRECTORY);
+        sourceDir               = getValue(config, TaskPlugin.SOURCE_DIRECTORY);
+        generator               = getValue(config, TaskPlugin.GENERATOR);
+        compilerC               = getValue(config, TaskPlugin.COMPILER_C);
+        compilerCpp             = getValue(config, TaskPlugin.COMPILER_CPP);
+        performBuild            = getValue(config, TaskPlugin.PERFORM_BUILD);
+        buildParallelJobs       = getValue(config, TaskPlugin.BUILD_PARALLEL_JOBS);
+        cpackEnable             = getValue(config, TaskPlugin.CPACK_ENABLE);
+        cpackGenerator          = getValue(config, TaskPlugin.CPACK_GENERATOR);
+        cpackPackageFileName    = getValue(config, TaskPlugin.CPACK_PACKAGE_FILE_NAME);
     }
 
     private String getValue(Map config, String property) {

@@ -51,6 +51,18 @@ public class ExecuteRequest {
             }
         }
 
+        // Run cpack (if supposed to)
+        boolean cpackEnable = Boolean.parseBoolean(config.cpackEnable);
+        if (cpackEnable) {
+            logger.printLine("Starting to run cpack...");
+            CpackTaskExecutor executor = new CpackTaskExecutor(config);
+            result = executor.execute(context, logger);
+            if (!result.success()) {
+                result = new Result(false, "Running cpack failed: " + result.message());
+                return new DefaultGoPluginApiResponse(result.responseCode(), TaskPlugin.GSON.toJson(result.toMap()));
+            }
+        }
+
         logger.printLine("Task completed successfully!");
 
         // We succeeded

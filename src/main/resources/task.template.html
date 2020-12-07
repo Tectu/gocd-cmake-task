@@ -347,4 +347,39 @@
     </div>
   </div>
 
+  <!-- CPack panel -->
+  <div class="ea-panel">
+    <div class="ea-panel_header">CPack</div>
+    <div class="ea-panel_body">
+
+      <!-- Enable -->
+      <div class="form_item_block">
+        <input type="checkbox"
+               ng-model="cpack_enable"
+               ng-true-value="true"
+               ng-false-value="false"
+        />
+      </div>
+
+      <!-- Generator -->
+      <div class="form_item_block">
+        <label>Generator:</label>
+        <input type="text" placeholder="ZIP" ng-model="cpack_generator" ng-required="false"/>
+        <div class="form-help-content">
+          <p>The CPack generator to use. For example <em>"ZIP"</em> or <em>"NSIS"</em> (without quotes).</p>
+        </div>
+      </div>
+
+      <!-- Package File Name -->
+      <div class="form_item_block">
+        <label>Package Name:</label>
+        <input type="text" placeholder="" ng-model="cpack_package_file_name" ng-required="false"/>
+        <div class="form-help-content">
+          <p>The name of the resulting package file. This overrides <em>CPACK_PACKAGE_FILE_NAME</em>.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>

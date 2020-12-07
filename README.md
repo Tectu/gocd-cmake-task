@@ -34,6 +34,13 @@ Build settings:
 | Enable | `perform_build` | `true` | Whether to launch the build after cmake successfully generated the buildsystem |
 | Parallel Jobs | `build_parallel_jobs` | `16` | The number of parallel jobs to use when building |
 
+CPack settings:
+
+| Settings | Key | Sample Value | Description |
+| :--- | :--- | :--- | :--- |
+| Enable | `cpack_enable` | `true` | Whether to run CPack after successful building. |
+| Package File Name | `cpack_package_file_name` | `myproject_linux_gcc_x86_64` | The name of the resulting package file. This value will be assigned to `CPACK_PACKAGE_FILE_NAME`). |
+
 ## Building
 Build with:
 ```shell script

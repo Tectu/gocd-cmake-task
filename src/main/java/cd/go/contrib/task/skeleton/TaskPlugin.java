@@ -32,14 +32,17 @@ import java.util.Arrays;
 @Extension
 public class TaskPlugin implements GoPlugin {
 
-    public static final String BUILD_TYPE           = "build_type";
-    public static final String BUILD_DIRECTORY      = "build_directory";
-    public static final String SOURCE_DIRECTORY     = "source_directory";
-    public static final String GENERATOR            = "generator";
-    public static final String COMPILER_C           = "compiler_c";
-    public static final String COMPILER_CPP         = "compiler_cpp";
-    public static final String PERFORM_BUILD        = "perform_build";
-    public static final String BUILD_PARALLEL_JOBS  = "build_parallel_jobs";
+    public static final String BUILD_TYPE               = "build_type";
+    public static final String BUILD_DIRECTORY          = "build_directory";
+    public static final String SOURCE_DIRECTORY         = "source_directory";
+    public static final String GENERATOR                = "generator";
+    public static final String COMPILER_C               = "compiler_c";
+    public static final String COMPILER_CPP             = "compiler_cpp";
+    public static final String PERFORM_BUILD            = "perform_build";
+    public static final String BUILD_PARALLEL_JOBS      = "build_parallel_jobs";
+    public static final String CPACK_ENABLE             = "cpack_enable";
+    public static final String CPACK_GENERATOR          = "cpack_generator";
+    public static final String CPACK_PACKAGE_FILE_NAME  = "cpack_package_file_name";
     public static final Gson GSON = new GsonBuilder().serializeNulls().create();
 
     public static Logger LOGGER = Logger.getLoggerFor(TaskPlugin.class);

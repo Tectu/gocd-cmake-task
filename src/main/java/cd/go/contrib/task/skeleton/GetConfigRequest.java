@@ -58,6 +58,24 @@ public class GetConfigRequest {
         buildParallelJobs.put("required", false);
         config.put(TaskPlugin.BUILD_PARALLEL_JOBS, buildParallelJobs);
 
+        HashMap<String, Object> cpackEnable = new HashMap<>();
+        cpackEnable.put("display-order", "8");
+        cpackEnable.put("display-name", "Enable CPack");
+        cpackEnable.put("required", false);
+        config.put(TaskPlugin.CPACK_ENABLE, cpackEnable);
+
+        HashMap<String, Object> cpackGenerator = new HashMap<>();
+        cpackGenerator.put("display-order", "9");
+        cpackGenerator.put("display-name", "CPack Generator");
+        cpackGenerator.put("required", false);
+        config.put(TaskPlugin.CPACK_GENERATOR, cpackGenerator);
+
+        HashMap<String, Object> cpackPackageFileName = new HashMap<>();
+        cpackPackageFileName.put("display-order", "10");
+        cpackPackageFileName.put("display-name", "CPack Package File Name");
+        cpackPackageFileName.put("required", false);
+        config.put(TaskPlugin.CPACK_PACKAGE_FILE_NAME, cpackPackageFileName);
+
         return DefaultGoPluginApiResponse.success(TaskPlugin.GSON.toJson(config));
     }
 }
